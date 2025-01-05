@@ -148,25 +148,25 @@ public class Config{
 
 	public static class SetString{
 		public static void setSpawnWorldName(Player player){
-			config.set("server.spawn_world_name", player);
+			config.set("server.spawn_world_name", player.getWorld().getName());
 		}
 	}
 
 	public static class SetInt{
 		public static void setSpawnX(Player player){
-			config.set("server.spawn_x", player);
+			config.set("server.spawn_x", player.getLocation().getX());
 		}
 		public static void setSpawnY(Player player){
-			config.set("server.spawn_y", player);
+			config.set("server.spawn_y", player.getLocation().getY());
 		}
 		public static void setSpawnZ(Player player){
-			config.set("server.spawn_z", player);
+			config.set("server.spawn_z", player.getLocation().getZ());
 		}
 		public static void setSpawnYaw(Player player){
-			config.set("server.spawn_yaw", player);
+			config.set("server.spawn_yaw", player.getLocation().getYaw());
 		}
 		public static void setSpawnPitch(Player player){
-			config.set("server.spawn_pitch", player);
+			config.set("server.spawn_pitch", player.getLocation().getPitch());
 		}
 	}
 }

@@ -19,8 +19,9 @@ public class PlayersTablist implements Listener {
         String footer = ChatColor.translateAlternateColorCodes('&', GetString.getTablistFooter(player));
 
         String format = ChatColor.translateAlternateColorCodes('&', GetString.getTablistFormat(player));
-        
+
         Tablist.sendToPlayer(player, header, footer);
+
         player.setPlayerListName(format);
     }
 }
