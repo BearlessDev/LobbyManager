@@ -3,6 +3,7 @@ main: fr.bearless.lobbymanager.LobbyManager
 name: LobbyManager
 version: 2
 author: Bearless
+softdepend: [ LuckPerms ]
 
 commands:
   lobbymanager-reload:
@@ -14,3 +15,4 @@ commands:
   lobbymanager-setspawn:
     aliases: [lm-setspawn, setspawn]
     description: Set the Spawn Location where the Player are.
+  test:

@@ -24,5 +24,26 @@
       <artifactId>craftbukkit-1.8.8</artifactId>
       <version>R</version>
     </dependency>
+    
+    <dependency>
+    	<groupId>net.luckperms</groupId>
+    	<artifactId>api</artifactId>
+    	<version>5.4</version>
+    	<scope>provided</scope>
+    </dependency>
   </dependencies>
+  
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.2.2</version>
+              <configuration>
+                  <outputDirectory>C:\Users\16bea\OneDrive\Documents\Plugins\My Plugin</outputDirectory>
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
+  
 </project>

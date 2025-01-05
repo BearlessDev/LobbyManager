@@ -1,4 +1,3 @@
-fr\bearless\lobbymanager\Register.class
 fr\bearless\lobbymanager\events\PlayersTablist.class
 fr\bearless\lobbymanager\commands\ReloadCmd.class
 fr\bearless\lobbymanager\commands\SetSpawnCmd.class
