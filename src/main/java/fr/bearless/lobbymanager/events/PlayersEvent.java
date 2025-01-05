@@ -3,6 +3,7 @@ package fr.bearless.lobbymanager.events;
 import fr.bearless.lobbymanager.Config.GetBoolean;
 import fr.bearless.lobbymanager.Config.GetInt;
 import fr.bearless.lobbymanager.Config.GetString;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
