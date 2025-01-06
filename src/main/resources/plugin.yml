@@ -15,4 +15,3 @@ commands:
   lobbymanager-setspawn:
     aliases: [lm-setspawn, setspawn]
     description: Set the Spawn Location where the Player are.
-  test:

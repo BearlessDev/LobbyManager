@@ -1,7 +1,6 @@
-fr\bearless\lobbymanager\events\PlayersTablist.class
 fr\bearless\lobbymanager\commands\ReloadCmd.class
+fr\bearless\lobbymanager\tables\Tablist.class
+fr\bearless\lobbymanager\events\PlayersEvent.class
 fr\bearless\lobbymanager\commands\SetSpawnCmd.class
 fr\bearless\lobbymanager\events\WorldEvent.class
-fr\bearless\lobbymanager\tables\Tablist.class
 fr\bearless\lobbymanager\commands\SpawnCmd.class
-fr\bearless\lobbymanager\events\PlayersEvent.class

@@ -3,6 +3,8 @@ package fr.bearless.lobbymanager.events;
 import fr.bearless.lobbymanager.Config.GetBoolean;
 import fr.bearless.lobbymanager.Config.GetInt;
 import fr.bearless.lobbymanager.Config.GetString;
+import fr.bearless.lobbymanager.LobbyManager;
+import fr.bearless.lobbymanager.runnables.TablistRunnable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,14 +20,22 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayersEvent implements Listener {
+	
+	private final LobbyManager plugin;
+	
+	public PlayersEvent(LobbyManager plugin){
+		this.plugin = plugin;
+	}
 
-    @EventHandler
+	@EventHandler
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
 
         if(GetBoolean.isDefaultJoinMessageDisabled()){
             e.setJoinMessage(GetString.getCustomJoinMessage(player));
         }
+        
+        new TablistRunnable(plugin).start(); // Update the Tablist every Seconds for the player.
 
         player.setHealth(GetInt.getPlayerHealthLevel());
         player.setFoodLevel(GetInt.getPlayerFoodLevel());

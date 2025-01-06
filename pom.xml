@@ -40,7 +40,7 @@
               <artifactId>maven-jar-plugin</artifactId>
               <version>3.2.2</version>
               <configuration>
-                  <outputDirectory>C:\Users\16bea\OneDrive\Documents\Plugins\My Plugin</outputDirectory>
+                  <outputDirectory>C:\Users\Bryan Crozon\Documents\Plugins\My Plugins</outputDirectory>
               </configuration>
           </plugin>
       </plugins>

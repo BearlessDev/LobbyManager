@@ -7,6 +7,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import fr.bearless.lobbymanager.Logger;
 import fr.bearless.lobbymanager.Logger.LogLevel;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 
 public class LuckPermsManager{
 	
@@ -35,10 +36,17 @@ public class LuckPermsManager{
 		return luckPerms;
 	}
 
-	public static void getPlayerPrefix(Player player){
-		if(isAvailable()){
-			LuckPerms luckPerms = getLuckPerms();
+	public static String getPlayerPrefix(Player player){
+		if(!isAvailable()){
+			return null;
 		}
+		
+		LuckPerms luckPerms = getLuckPerms();
+		
+		User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
+		String prefix = user.getCachedData().getMetaData().getPrefix();
+		
+		return prefix;
 	}
 	
 }
