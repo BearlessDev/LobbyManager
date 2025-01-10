@@ -10,11 +10,13 @@ import fr.bearless.lobbymanager.commands.SpawnCmd;
 import fr.bearless.lobbymanager.events.ChatEvent;
 import fr.bearless.lobbymanager.events.PlayersEvent;
 import fr.bearless.lobbymanager.events.WorldEvent;
+import fr.bearless.lobbymanager.managers.ConfigManager;
 import fr.bearless.lobbymanager.managers.LuckPermsManager;
 
 public class LobbyManager extends JavaPlugin {
 	
 	private static LobbyManager instance;
+	private static ConfigManager messageConfig;
 	
 	@Override
 	public void onEnable(){
@@ -29,6 +31,7 @@ public class LobbyManager extends JavaPlugin {
 		}
 		
 		saveDefaultConfig();
+		initializeConfigs();
 		
 		registerCommands();
 		registerEvents();
@@ -51,5 +54,20 @@ public class LobbyManager extends JavaPlugin {
 	public static LobbyManager getInstance(){
 		return instance;
 	}
-
+	
+	public void initializeConfigs(){
+		messageConfig = new ConfigManager(this, "", "message.yml");
+		
+		messageConfig.saveDefaultConfig();
+	}
+	
+	public ConfigManager getConfigs(String config){
+		switch(config){
+			case "message":
+				return messageConfig;
+			default:
+				return null;
+		}
+	}
+	
 }

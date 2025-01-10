@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class ReloadCmd implements CommandExecutor {
 
-    final LobbyManager plugin;
+    private final LobbyManager plugin;
 
     public ReloadCmd(LobbyManager main) {
         this.plugin = main;
@@ -19,22 +19,40 @@ public class ReloadCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
         if(sender instanceof Player){
             Player player = (Player) sender;
 
             if(label.equalsIgnoreCase("lobbymanager-reload") || label.equalsIgnoreCase("lm-reload")){
-                if(args.length == 0){
-                    if(player.hasPermission(GetString.getReloadPermission())){
-                        plugin.reloadConfig();
-
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadMessage()));
-                    }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadPermissionMessage()));
-                    }
-                }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadUsageMessage()));
+            	if(!player.hasPermission(GetString.getReloadPermission())){
+            		player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadPermissionMessage()));
+            		return true;
+            	}
+            	if(args.length > 1){
+            		player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadUsageMessage()));
+            		return true;
+            	}
+            	
+                if(args.length == 1){
+                	String configName = args[0];
+                	
+                	switch(configName){
+                		case "message":
+                			plugin.getConfigs("message").reloadConfig();
+                			player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lMessage.yml &ahas been reloaded."));
+                			break;
+                		default:
+                			player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l" + configName + " &cn'existe pas."));
+                	}
+                	return true;
                 }
+                
+                // Reload all the Config Files
+                plugin.reloadConfig();
+                plugin.getConfigs("message").reloadConfig();
+                
+                // Send all the Reload Message
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', GetString.getReloadMessage()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lMessage.yml &ahas been reloaded."));
             }
         }
 
