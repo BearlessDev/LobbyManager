@@ -1,0 +1,33 @@
+commands:
+  globalUsage: "&c&lUSAGE: &c/lobbymanager <spawn|setspawn|reload>"
+  notConsoleCommand: "This command can only be used bu Player."
+  spawn:
+    usage: "&c&lUSAGE: &c/lobbymanager spawn"
+    success: "&aYou have been teleported to the Spawn."
+  setSpawn:
+    usage: "&c&lUSAGE: &c/lobbymanager setSpawn"
+    success: "&aSpawn has been successfully set to your Location."
+  reload:
+    usage: "&c&lUSAGE: &c/lobbymanager reload <all|config>"
+    reloadAll: "&aAll config file has been reloaded."
+    reloadConfig: "&a%config% has been reloaded."
+
+player:
+  customJoinMessage: "%prefix% %player% &ejoin the server."
+  customQuitMessage: "%prefix% %player% &equit the server."
+  chatFormat: "%prefix%%player% &8» &r%message%"
+  noPvPMessage: "&cPvp is not allowed in this server."
+
+tablist:
+  header: "&3&lLobbyManager &8| &b&nYour Server\n&7This header supports &f&lUNLIMITED LINES&7!\n&7Welcome back, &a%player%&7."
+  footer: "&7Customize with &c&lCOLORS&7, &d&nUNDERLINE&7 or &e&oITALICS&7.\n&8(&7Edit this message in &fmessages.yml&8)"
+  format: "%prefix%%player%"
+
+permissions:
+  block:
+    break: "&cYou don't have the required permission to Break Block."
+    place: "&cYou don't have the required permission to Place Block."
+  commands:
+    spawn: "&cYou don't have the required permission for this command."
+    setSpawn: "&cYou don't have the required permission for this command."
+    reload: "&cYou don't have the required permission for this command."

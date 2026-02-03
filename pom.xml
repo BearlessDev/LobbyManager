@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.bearless.lobbymanager</groupId>
   <artifactId>LobbyManager</artifactId>
-  <version>v2</version>
+  <version>v2.1.0</version>
   <name>LobbyManager</name>
   
   <repositories>
@@ -13,37 +13,27 @@
   </repositories>
   
   <dependencies>
-    <dependency>
-   	  <groupId>org.spigotmc</groupId>
-   	  <artifactId>spigot-api</artifactId>
-   	  <version>1.8.8-R0.1-SNAPSHOT</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>com.github.azbh111</groupId>
-      <artifactId>craftbukkit-1.8.8</artifactId>
-      <version>R</version>
-    </dependency>
-    
-    <dependency>
-    	<groupId>net.luckperms</groupId>
-    	<artifactId>api</artifactId>
-    	<version>5.4</version>
-    	<scope>provided</scope>
-    </dependency>
+        <dependency>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>spigot-api</artifactId>
+          <version>1.8.8-R0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>com.github.azbh111</groupId>
+          <artifactId>craftbukkit-1.8.8</artifactId>
+          <version>R</version>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.4</version>
+            <scope>provided</scope>
+        </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.42</version>
+      </dependency>
   </dependencies>
-  
-  <build>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-jar-plugin</artifactId>
-              <version>3.2.2</version>
-              <configuration>
-                  <outputDirectory>C:\Users\Bryan Crozon\Documents\Plugins\My Plugins</outputDirectory>
-              </configuration>
-          </plugin>
-      </plugins>
-  </build>
-  
+
 </project>
