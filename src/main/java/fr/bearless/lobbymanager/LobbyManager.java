@@ -15,6 +15,7 @@ public class LobbyManager extends JavaPlugin {
     @Getter private static LobbyManager instance;
 
     @Getter private static ConfigReader messagesConfig;
+    @Getter private static ConfigReader baseConfig;
 
     @Getter private static MessageManager messageManager;
     @Getter private static ConfigManager configManager;
@@ -28,7 +29,8 @@ public class LobbyManager extends JavaPlugin {
 
         messagesConfig = new ConfigReader(this, "", "messages.yml");
         messagesConfig.saveDefaultConfig();
-        saveDefaultConfig();
+        baseConfig = new ConfigReader(this, "", "config.yml");
+        baseConfig.saveDefaultConfig();
 
         messageManager = new MessageManager();
         configManager = new ConfigManager();

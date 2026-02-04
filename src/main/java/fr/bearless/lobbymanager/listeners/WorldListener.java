@@ -5,9 +5,7 @@ import fr.bearless.lobbymanager.managers.configs.ConfigManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.event.world.WorldEvent;
 
 public class WorldListener implements Listener {
     private final ConfigManager configManager;

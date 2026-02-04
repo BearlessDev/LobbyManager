@@ -12,13 +12,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class LobbyManagerCommand implements CommandExecutor {
-    private static LobbyManager plugin;
-    private ConfigReader messageConfig;
-    private static MessageManager messageManager;
-    private static ConfigManager configManager;
+    private final ConfigReader config;
+    private final ConfigReader messageConfig;
+    private final MessageManager messageManager;
+    private final ConfigManager configManager;
 
     public LobbyManagerCommand() {
-        plugin = LobbyManager.getInstance();
+        config = LobbyManager.getBaseConfig();
         messageConfig = LobbyManager.getMessagesConfig();
         messageManager = LobbyManager.getMessageManager();
         configManager = LobbyManager.getConfigManager();
@@ -138,17 +138,17 @@ public class LobbyManagerCommand implements CommandExecutor {
 
         switch(args[1].toLowerCase()) {
             case "all":
-                plugin.reloadConfig();
+                config.reloadConfig();
                 messageConfig.reloadConfig();
                 sender.sendMessage(messageManager.getReloadCommandReloadAll());
                 break;
             case "config":
-                plugin.reloadConfig();
-                sender.sendMessage(messageManager.getReloadCommandReloadConfig(args[1] + ".yml"));
+                config.reloadConfig();
+                sender.sendMessage(messageManager.getReloadCommandReloadConfig("config.yml"));
                 break;
             case "message":
                 messageConfig.reloadConfig();
-                sender.sendMessage(messageManager.getReloadCommandReloadConfig(args[1] + ".yml"));
+                sender.sendMessage(messageManager.getReloadCommandReloadConfig("messages.yml"));
                 break;
             default:
                 sender.sendMessage(messageManager.getReloadCommandUsage());

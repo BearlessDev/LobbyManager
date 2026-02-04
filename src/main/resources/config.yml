@@ -1,3 +1,11 @@
+# LobbyManager | Config.yml
+#
+# Here you can configure everything in the plugin.
+# From the spawnpoint to the player and world related.
+#
+# If you need support you can join the Discord below.
+# https://discord.gg/zJEREDAcPZ
+
 spawn:
   world: world
   x: 0.0

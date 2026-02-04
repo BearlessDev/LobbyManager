@@ -1,3 +1,16 @@
+# LobbyManager | Messages.yml
+#
+# Here you can customize every message of the plugin.
+# You can use minecraft color code to make you message fancy.
+#
+# Placeholder available:
+# - %player% -> Return the name of the Player that perform the action.
+# - %prefix% -> Return the group prefix of the Player if Luckperms is in the server.
+# (Note: The placeholders cannot be used in all message, only in those where there are by default.)
+#
+# If you need support you can join the Discord below.
+# https://discord.gg/zJEREDAcPZ
+
 commands:
   globalUsage: "&c&lUSAGE: &c/lobbymanager <spawn|setspawn|reload>"
   notConsoleCommand: "This command can only be used bu Player."
