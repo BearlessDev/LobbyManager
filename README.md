@@ -37,13 +37,6 @@
 
 ---
 
-## ➤ Prerequisites
-
-- **Spigot Server** or a fork like Paper (version 1.8.8 or higher).
-- **[LuckPerms](https://luckperms.net/) (Optional but recommended)** to use prefix features (`%prefix%`).
-
----
-
 ## ➤ Installation
 
 1. Download the latest version of the plugin.
