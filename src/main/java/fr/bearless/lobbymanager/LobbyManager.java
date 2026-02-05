@@ -21,8 +21,6 @@ public class LobbyManager extends JavaPlugin {
     @Getter private static ConfigManager configManager;
     @Getter private static LuckPermsManager luckPermsManager;
 
-    private static TablistUpdater tablistUpdater;
-
     @Override
     public void onEnable() {
         instance = this;
@@ -36,7 +34,7 @@ public class LobbyManager extends JavaPlugin {
         configManager = new ConfigManager();
         luckPermsManager = new LuckPermsManager();
 
-        tablistUpdater = new TablistUpdater();
+        TablistUpdater tablistUpdater = new TablistUpdater();
         tablistUpdater.start();
 
         registerCommands();
