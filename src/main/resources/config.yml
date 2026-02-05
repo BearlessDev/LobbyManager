@@ -34,6 +34,7 @@ world:
   teleportIfYPosUnder: 5
 
 permissions:
+  notifyVersion: "lobbymanager.version.notify"
   block:
     break: "lobbymanager.block.break"
     place: "lobbymanager.block.place"

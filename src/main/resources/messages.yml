@@ -30,6 +30,7 @@ player:
   customQuitMessage: "%prefix% %player% &equit the server."
   chatFormat: "%prefix%%player% &8» &r%message%"
   noPvPMessage: "&cPvp is not allowed in this server."
+  newVersionAvailable: "&aA new Version of the Plugin is available."
 
 tablist:
   header: "&3&lLobbyManager &8| &b&nYour Server\n&7This header supports &f&lUNLIMITED LINES&7!\n&7Welcome back, &a%player%&7."

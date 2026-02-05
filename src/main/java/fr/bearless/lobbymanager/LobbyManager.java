@@ -8,7 +8,9 @@ import fr.bearless.lobbymanager.managers.configs.ConfigManager;
 import fr.bearless.lobbymanager.managers.configs.MessageManager;
 import fr.bearless.lobbymanager.managers.LuckPermsManager;
 import fr.bearless.lobbymanager.utils.ConfigReader;
+import fr.bearless.lobbymanager.utils.UpdateChecker;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LobbyManager extends JavaPlugin {
@@ -20,6 +22,8 @@ public class LobbyManager extends JavaPlugin {
     @Getter private static MessageManager messageManager;
     @Getter private static ConfigManager configManager;
     @Getter private static LuckPermsManager luckPermsManager;
+
+    @Getter private UpdateChecker updateChecker;
 
     @Override
     public void onEnable() {
@@ -36,6 +40,15 @@ public class LobbyManager extends JavaPlugin {
 
         TablistUpdater tablistUpdater = new TablistUpdater();
         tablistUpdater.start();
+
+        updateChecker = new UpdateChecker(this, 116001);
+        updateChecker.fetchVersion(v -> {
+            if(updateChecker.isNewerVersion(v)) {
+                getLogger().info("A new version of the plugin is available: " + v);
+            } else {
+                getLogger().info("You are Running the latest version of this plugin.");
+            }
+        });
 
         registerCommands();
         registerListeners();

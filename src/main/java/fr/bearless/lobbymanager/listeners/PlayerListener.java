@@ -18,11 +18,13 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
 public class PlayerListener implements Listener {
+    private final LobbyManager plugin;
     private final ConfigManager configManager;
     private final MessageManager messageManager;
     private final LuckPermsManager luckPermsManager;
 
     public PlayerListener() {
+        plugin = LobbyManager.getInstance();
         configManager = LobbyManager.getConfigManager();
         messageManager = LobbyManager.getMessageManager();
         luckPermsManager = LobbyManager.getLuckPermsManager();
@@ -63,6 +65,14 @@ public class PlayerListener implements Listener {
         player.setMaxHealth(configManager.getPlayerMaxHealth());
         player.setHealth(player.getMaxHealth());
         player.setFoodLevel(configManager.getPlayerFoodLevel());
+
+        // Notify the Player that a new Plugin Version is available
+        if(player.hasPermission(configManager.getNotifyVersionPermission())) {
+            String fetchVersion = plugin.getUpdateChecker().getLatestVersion();
+            if(plugin.getUpdateChecker().isNewerVersion(fetchVersion)) {
+                player.sendMessage(messageManager.getNewVersionAvailable());
+            }
+        }
     }
 
     @EventHandler

@@ -59,6 +59,9 @@ public class MessageManager {
     public String getNoPvPMessage() {
         return coloredText(messagesConfig.getConfig().getString("player.noPvPMessage"), null, null, null);
     }
+    public String getNewVersionAvailable() {
+        return coloredText(messagesConfig.getConfig().getString("player.newVersionAvailable"),null, null, null);
+    }
 
     // Tablist
     public String getTablistHeader(Player player, String prefix) {

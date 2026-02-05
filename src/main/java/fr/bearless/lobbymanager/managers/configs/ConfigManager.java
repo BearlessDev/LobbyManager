@@ -92,6 +92,9 @@ public class ConfigManager {
     }
 
     // Permissions
+    public String getNotifyVersionPermission() {
+        return config.getConfig().getString("permissions.notifyVersion");
+    }
     public String getBlockBreakPermission() {
         return config.getConfig().getString("permissions.block.break");
     }
