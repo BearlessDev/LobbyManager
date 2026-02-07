@@ -34,6 +34,16 @@ public class LobbyManager extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        updateChecker = new UpdateChecker(this, 116001);
+        updateChecker.checkForUpdate(v -> {
+            if(updateChecker.isUpdateAvailable()) {
+                getLogger().info("A new Update is available: " + v);
+                getLogger().info("You are running on Version: " + getDescription().getVersion());
+            } else {
+                getLogger().info("You are running on the Latest Version.");
+            }
+        });
+
         baseConfig = initConfig(BaseConfig.class, false);
         messageConfig = initConfig(MessageConfig.class, true);
 
@@ -41,15 +51,6 @@ public class LobbyManager extends JavaPlugin {
 
         TablistUpdater tablistUpdater = new TablistUpdater();
         tablistUpdater.start();
-
-        updateChecker = new UpdateChecker(this, 116001);
-        updateChecker.fetchVersion(v -> {
-            if(updateChecker.isNewerVersion(v)) {
-                getLogger().info("A new version of the plugin is available: " + v);
-            } else {
-                getLogger().info("You are Running the latest version of this plugin.");
-            }
-        });
 
         registerCommands();
         registerListeners();

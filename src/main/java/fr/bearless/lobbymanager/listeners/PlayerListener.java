@@ -5,6 +5,7 @@ import fr.bearless.lobbymanager.configs.BaseConfig;
 import fr.bearless.lobbymanager.configs.MessageConfig;
 import fr.bearless.lobbymanager.managers.LuckPermsManager;
 import fr.bearless.lobbymanager.utils.FormatText;
+import fr.bearless.lobbymanager.utils.UpdateChecker;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,16 +20,16 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 
 public class PlayerListener implements Listener {
-    private final LobbyManager plugin;
     private final BaseConfig baseConfig;
     private final MessageConfig messageConfig;
     private final LuckPermsManager luckPermsManager;
+    private final UpdateChecker updateChecker;
 
     public PlayerListener() {
-        plugin = LobbyManager.getInstance();
         baseConfig = LobbyManager.getBaseConfig();
         messageConfig = LobbyManager.getMessageConfig();
         luckPermsManager = LobbyManager.getLuckPermsManager();
+        updateChecker = LobbyManager.getInstance().getUpdateChecker();
     }
 
     @EventHandler
@@ -71,10 +72,8 @@ public class PlayerListener implements Listener {
 
         // Notify the Player that a new Plugin Version is available
         if(player.hasPermission(baseConfig.getNotifyNewUpdatePermission())) {
-            String fetchVersion = plugin.getUpdateChecker().getLatestVersion();
-            if(plugin.getUpdateChecker().isNewerVersion(fetchVersion)) {
-                player.sendMessage(messageConfig.getNewVersionAvailableMessage());
-            }
+            if(!updateChecker.isUpdateAvailable()) return;
+            player.sendMessage(messageConfig.getNewVersionAvailableMessage());
         }
     }
 
