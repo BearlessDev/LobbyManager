@@ -20,11 +20,13 @@
           <groupId>org.spigotmc</groupId>
           <artifactId>spigot-api</artifactId>
           <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>com.github.azbh111</groupId>
           <artifactId>craftbukkit-1.8.8</artifactId>
           <version>R</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
@@ -63,6 +65,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <minimizeJar>true</minimizeJar>
                             <relocations>
                                 <relocation>
                                     <pattern>pl.mikigal.config</pattern>
