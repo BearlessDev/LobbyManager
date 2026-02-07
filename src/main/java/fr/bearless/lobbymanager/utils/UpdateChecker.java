@@ -29,7 +29,7 @@ public class UpdateChecker {
                     consumer.accept(this.latestVersion);
                 }
             } catch(IOException e) {
-                this.plugin.getLogger().warning("Unable to check fo newest update: " + e.getMessage());
+                this.plugin.getLogger().warning("Unable to check for newest update: " + e.getMessage());
             }
         });
     }

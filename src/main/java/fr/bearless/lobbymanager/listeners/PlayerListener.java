@@ -1,12 +1,13 @@
 package fr.bearless.lobbymanager.listeners;
 
 import fr.bearless.lobbymanager.LobbyManager;
-import fr.bearless.lobbymanager.managers.configs.ConfigManager;
-import fr.bearless.lobbymanager.managers.configs.MessageManager;
+import fr.bearless.lobbymanager.configs.BaseConfig;
+import fr.bearless.lobbymanager.configs.MessageConfig;
 import fr.bearless.lobbymanager.managers.LuckPermsManager;
-import org.bukkit.Bukkit;
+import fr.bearless.lobbymanager.utils.FormatText;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,58 +20,60 @@ import org.bukkit.event.player.*;
 
 public class PlayerListener implements Listener {
     private final LobbyManager plugin;
-    private final ConfigManager configManager;
-    private final MessageManager messageManager;
+    private final BaseConfig baseConfig;
+    private final MessageConfig messageConfig;
     private final LuckPermsManager luckPermsManager;
 
     public PlayerListener() {
         plugin = LobbyManager.getInstance();
-        configManager = LobbyManager.getConfigManager();
-        messageManager = LobbyManager.getMessageManager();
+        baseConfig = LobbyManager.getBaseConfig();
+        messageConfig = LobbyManager.getMessageConfig();
         luckPermsManager = LobbyManager.getLuckPermsManager();
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        String prefix = luckPermsManager.getPlayerPrefix(player);
 
         // Set the custom Join Message.
-        if(configManager.enableCustomJoinMessage()) {
-            e.setJoinMessage(messageManager.getCustomJoinMessage(player, luckPermsManager.getPlayerPrefix(player)));
+        if(baseConfig.getEnableCustomJoinMessage()) {
+            String joinMessage = new FormatText(messageConfig.getCustomJoinMessage())
+                    .withPrefix(prefix).withPlayer(player).build();
+            e.setJoinMessage(joinMessage);
         }
 
         // Teleport Player to the spawn if set in "config.yml"
-        if(configManager.sendPlayerAtSpawnOnJoin()) {
-            String spawnWorld = configManager.getSpawnWorld();
-            double spawnX = configManager.getSpawnX();
-            double spawnY = configManager.getSpawnY();
-            double spawnZ = configManager.getSpawnZ();
-            float spawnYaw = configManager.getSpawnYaw();
-            float spawnPitch = configManager.getSpawnPitch();
+        if(baseConfig.getSendToSpawnOnJoin()) {
+            World world = baseConfig.getSpawn().getWorld();
+            double x = baseConfig.getSpawn().getX();
+            double y = baseConfig.getSpawn().getY();
+            double z = baseConfig.getSpawn().getZ();
+            float yaw = baseConfig.getSpawn().getYaw();
+            float pitch = baseConfig.getSpawn().getPitch();
 
-            Location spawnLoc = new Location(Bukkit.getWorld(spawnWorld), spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
-
+            Location spawnLoc = new Location(world, x, y, z, yaw, pitch);
             player.teleport(spawnLoc);
         }
 
         // Set Player Gamemode
-        GameMode mode = GameMode.valueOf(configManager.getGamemode().toUpperCase());
+        GameMode mode = baseConfig.getPlayerGamemode();
         player.setGameMode(mode);
 
         // Set Player Level and Exp on Join
-        player.setLevel(configManager.getLevelOnJoin());
-        player.setExp(configManager.getExpOnJoin());
+        player.setLevel(baseConfig.getPlayerLevelOnJoin());
+        player.setExp((float) baseConfig.getPlayerExpOnJoin());
 
         // Set Player Heart and Food value
-        player.setMaxHealth(configManager.getPlayerMaxHealth());
+        player.setMaxHealth(baseConfig.getPlayerMaxHealth());
         player.setHealth(player.getMaxHealth());
-        player.setFoodLevel(configManager.getPlayerFoodLevel());
+        player.setFoodLevel(baseConfig.getPlayerFoodLevel());
 
         // Notify the Player that a new Plugin Version is available
-        if(player.hasPermission(configManager.getNotifyVersionPermission())) {
+        if(player.hasPermission(baseConfig.getNotifyNewUpdatePermission())) {
             String fetchVersion = plugin.getUpdateChecker().getLatestVersion();
             if(plugin.getUpdateChecker().isNewerVersion(fetchVersion)) {
-                player.sendMessage(messageManager.getNewVersionAvailable());
+                player.sendMessage(messageConfig.getNewVersionAvailableMessage());
             }
         }
     }
@@ -78,9 +81,12 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
+        String prefix = luckPermsManager.getPlayerPrefix(player);
 
-        if(configManager.enableCustomQuitMessage()) {
-            e.setQuitMessage(messageManager.getCustomQuitMessage(player, luckPermsManager.getPlayerPrefix(player)));
+        if(baseConfig.getEnableCustomQuitMessage()) {
+            String quitMessage = new FormatText(messageConfig.getCustomQuitMessage())
+                    .withPrefix(prefix).withPlayer(player).build();
+            e.setQuitMessage(quitMessage);
         }
     }
 
@@ -88,8 +94,8 @@ public class PlayerListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         Player player = e.getPlayer();
 
-        if(!player.hasPermission(configManager.getBlockBreakPermission())) {
-            player.sendMessage(messageManager.getBlockBreakPermissionMessage());
+        if(!player.hasPermission(baseConfig.getBlockBreakPermission())) {
+            player.sendMessage(messageConfig.getBlockBreakPermissionMessage());
             e.setCancelled(true);
         }
     }
@@ -98,8 +104,8 @@ public class PlayerListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
 
-        if(!player.hasPermission(configManager.getBlockPlacePermission())) {
-            player.sendMessage(messageManager.getBlockPlacePermissionMessage());
+        if(!player.hasPermission(baseConfig.getBlockPlacePermission())) {
+            player.sendMessage(messageConfig.getBlockPlacePermissionMessage());
             e.setCancelled(true);
         }
     }
@@ -109,16 +115,17 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         String prefix = luckPermsManager.getPlayerPrefix(player);
         String message = e.getMessage();
-        String format = messageManager.getChatFormat(player, prefix).replaceAll("%message%", message);
+        String format = new FormatText(messageConfig.getChatFormat())
+                .withPrefix(prefix).withPlayer(player).withMessage(message).build();
         e.setFormat(format);
     }
 
     @EventHandler
     public void onPvP(EntityDamageByEntityEvent e) {
-        if(!configManager.canPvP()) {
+        if(!baseConfig.getCanPlayerPvP()) {
             e.setCancelled(true);
             if(e.getEntity() instanceof Player) {
-                e.getEntity().sendMessage(messageManager.getNoPvPMessage());
+                e.getEntity().sendMessage(messageConfig.getNoPvPMessage());
             }
         }
     }
@@ -127,7 +134,7 @@ public class PlayerListener implements Listener {
     public void onDamage(EntityDamageEvent e) {
         EntityDamageEvent.DamageCause damageCause = e.getCause();
 
-        if(!configManager.isFallDamageEnabled()) {
+        if(!baseConfig.getPlayerCanTakeFallDamage()) {
             if(damageCause == EntityDamageEvent.DamageCause.FALL) {
                 e.setCancelled(true);
             }
@@ -136,7 +143,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onHunger(FoodLevelChangeEvent e) {
-        if(!configManager.isFoodLossEnabled()) {
+        if(!baseConfig.getPlayerCanLostFood()) {
             e.setCancelled(true);
         }
     }
@@ -145,17 +152,16 @@ public class PlayerListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent e) {
         Player player = e.getPlayer();
 
-        if(configManager.teleportToSpawnIfFall()) {
-            if(player.getLocation().getY() <= configManager.teleportIfYPosUnder()) {
-                String spawnWorld = configManager.getSpawnWorld();
-                double spawnX = configManager.getSpawnX();
-                double spawnY = configManager.getSpawnY();
-                double spawnZ = configManager.getSpawnZ();
-                float spawnYaw = configManager.getSpawnYaw();
-                float spawnPitch = configManager.getSpawnPitch();
+        if(baseConfig.getPreventPlayerVoidFallEnabled()) {
+            if(player.getLocation().getY() <= baseConfig.getYLevelTarget()) {
+                World world = baseConfig.getSpawn().getWorld();
+                double x = baseConfig.getSpawn().getX();
+                double y = baseConfig.getSpawn().getY();
+                double z = baseConfig.getSpawn().getZ();
+                float yaw = baseConfig.getSpawn().getYaw();
+                float pitch = baseConfig.getSpawn().getPitch();
 
-                Location spawnLoc = new Location(Bukkit.getWorld(spawnWorld), spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
-
+                Location spawnLoc = new Location(world, x, y, z, yaw, pitch);
                 player.teleport(spawnLoc);
             }
         }
@@ -163,16 +169,15 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
-        String spawnWorld = configManager.getSpawnWorld();
-        double spawnX = configManager.getSpawnX();
-        double spawnY = configManager.getSpawnY();
-        double spawnZ = configManager.getSpawnZ();
-        float spawnYaw = configManager.getSpawnYaw();
-        float spawnPitch = configManager.getSpawnPitch();
+        World world = baseConfig.getSpawn().getWorld();
+        double x = baseConfig.getSpawn().getX();
+        double y = baseConfig.getSpawn().getY();
+        double z = baseConfig.getSpawn().getZ();
+        float yaw = baseConfig.getSpawn().getYaw();
+        float pitch = baseConfig.getSpawn().getPitch();
 
-        Location spawnLoc = new Location(Bukkit.getWorld(spawnWorld), spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
-
-        e.setRespawnLocation(spawnLoc);
+        Location spawnLoc = new Location(world, x, y, z, yaw, pitch);
+        e.getPlayer().teleport(spawnLoc);
     }
 
 }
