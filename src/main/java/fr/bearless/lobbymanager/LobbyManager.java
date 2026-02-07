@@ -1,41 +1,42 @@
 package fr.bearless.lobbymanager;
 
-import fr.bearless.lobbymanager.commands.LobbyManagerCommand;
+import fr.bearless.lobbymanager.commands.ReloadCommand;
+import fr.bearless.lobbymanager.commands.SetSpawnCommand;
+import fr.bearless.lobbymanager.commands.SpawnCommand;
 import fr.bearless.lobbymanager.components.TablistUpdater;
+import fr.bearless.lobbymanager.configs.BaseConfig;
+import fr.bearless.lobbymanager.configs.MessageConfig;
 import fr.bearless.lobbymanager.listeners.PlayerListener;
 import fr.bearless.lobbymanager.listeners.WorldListener;
-import fr.bearless.lobbymanager.managers.configs.ConfigManager;
-import fr.bearless.lobbymanager.managers.configs.MessageManager;
 import fr.bearless.lobbymanager.managers.LuckPermsManager;
-import fr.bearless.lobbymanager.utils.ConfigReader;
 import fr.bearless.lobbymanager.utils.UpdateChecker;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.mikigal.config.Config;
+import pl.mikigal.config.ConfigAPI;
+import pl.mikigal.config.style.CommentStyle;
+import pl.mikigal.config.style.NameStyle;
 
 public class LobbyManager extends JavaPlugin {
     @Getter private static LobbyManager instance;
 
-    @Getter private static ConfigReader messagesConfig;
-    @Getter private static ConfigReader baseConfig;
+    // Configs
+    @Getter private static BaseConfig baseConfig;
+    @Getter private static MessageConfig messageConfig;
 
-    @Getter private static MessageManager messageManager;
-    @Getter private static ConfigManager configManager;
+    // Managers
     @Getter private static LuckPermsManager luckPermsManager;
 
+    // Utils
     @Getter private UpdateChecker updateChecker;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        messagesConfig = new ConfigReader(this, "", "messages.yml");
-        messagesConfig.saveDefaultConfig();
-        baseConfig = new ConfigReader(this, "", "config.yml");
-        baseConfig.saveDefaultConfig();
+        baseConfig = initConfig(BaseConfig.class, false);
+        messageConfig = initConfig(MessageConfig.class, true);
 
-        messageManager = new MessageManager();
-        configManager = new ConfigManager();
         luckPermsManager = new LuckPermsManager();
 
         TablistUpdater tablistUpdater = new TablistUpdater();
@@ -55,13 +56,23 @@ public class LobbyManager extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("lobbymanager").setExecutor(new LobbyManagerCommand());
-        getCommand("spawn").setExecutor(new LobbyManagerCommand());
-        getCommand("setspawn").setExecutor(new LobbyManagerCommand());
+        getCommand("lobbymanager-spawn").setExecutor(new SpawnCommand());
+        getCommand("lobbymanager-setspawn").setExecutor(new SetSpawnCommand());
+        getCommand("lobbymanager-reload").setExecutor(new ReloadCommand());
     }
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getServer().getPluginManager().registerEvents(new WorldListener(), this);
+    }
+
+    private <T extends Config> T initConfig(Class<T> clazz, boolean translateColorCode) {
+        return ConfigAPI.init(
+                clazz,
+                NameStyle.CAMEL_CASE,
+                CommentStyle.ABOVE_CONTENT,
+                translateColorCode,
+                this
+        );
     }
 }

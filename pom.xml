@@ -2,14 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.bearless.lobbymanager</groupId>
   <artifactId>LobbyManager</artifactId>
-  <version>2.1.1</version>
-  <name>LobbyManager</name>
+  <version>3.0.0-dev1</version>
   
   <repositories>
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+      <repository>
+          <id>mikigal-repo</id>
+          <url>https://repo.mikigal.pl/releases</url>
+      </repository>
   </repositories>
   
   <dependencies>
@@ -33,6 +36,11 @@
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
           <version>1.18.42</version>
+      </dependency>
+      <dependency>
+          <groupId>pl.mikigal</groupId>
+          <artifactId>ConfigAPI</artifactId>
+          <version>1.2.6</version>
       </dependency>
   </dependencies>
 
