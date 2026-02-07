@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.bearless.lobbymanager</groupId>
   <artifactId>LobbyManager</artifactId>
-  <version>3.0.0-dev1</version>
+  <version>3.0.0</version>
   
   <repositories>
     <repository>

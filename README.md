@@ -48,13 +48,13 @@
 
 ## ➤ Commands and Permissions
 
-| Command                        | Description                                     | Permission                               |
-| ------------------------------ | ----------------------------------------------- | ---------------------------------------- |
-| `/spawn`                       | Teleports the player to the spawn.              | `lobbymanager.command.spawn`             |
-| `/setspawn`                    | Sets the spawn to the player's current location.| `lobbymanager.command.setspawn`          |
-| `/lobbymanager reload <all/config/message>` | Reloads the configuration files.                | `lobbymanager.command.reload`            |
-| Break blocks                   | Allows the player to break blocks.              | `lobbymanager.block.break`               |
-| Place blocks                   | Allows the player to place blocks.              | `lobbymanager.block.place`               |
+| Command                                             | Description                                     | Permission                               |
+|-----------------------------------------------------| ----------------------------------------------- | ---------------------------------------- |
+| `/lobbymanager-spawn` `/lm-spawn` `/spawn`          | Teleports the player to the spawn.              | `lobbymanager.command.spawn`             |
+| `/lobbymanager-setspawn` `/lm-setspawn` `/setspawn` | Sets the spawn to the player's current location.| `lobbymanager.command.setspawn`          |
+| `/lobbymanager-reload <all/config/message>`          | Reloads the configuration files.                | `lobbymanager.command.reload`            |
+| Break blocks                                        | Allows the player to break blocks.              | `lobbymanager.block.break`               |
+| Place blocks                                        | Allows the player to place blocks.              | `lobbymanager.block.place`               |
 
 ---
 
