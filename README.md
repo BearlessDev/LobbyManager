@@ -1,6 +1,6 @@
 # LobbyManager
 
-[![Version](https://img.shields.io/badge/Version-v2.1.0-blue.svg)](https://github.com/Bearless/LobbyManager)
+[![Version](https://img.shields.io/badge/Version-v3.0.0-blue.svg)](https://github.com/Bearless/LobbyManager)
 [![Spigot API](https://img.shields.io/badge/API-Spigot%201.8.8-orange.svg)](https://www.spigotmc.org/)
 
 **LobbyManager** is a comprehensive Spigot plugin designed to easily and efficiently manage your lobby server. It offers a wide range of customizable features to enhance the player experience from the moment they connect.
